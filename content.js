@@ -1,7 +1,7 @@
 
 const $=id=>document.getElementById(id);
-const tiles=[["Py","Python","l"],["C","C","l"],["Js","JavaScript","l"],["Ht","HTML","w"],["Cs","CSS","w"],["Re","React","w"],["No","Node.js","w"],["Ds","Data structures & algorithms","l"],["Ml","ML pipelines","a"],["Az","Azure ML Studio","a"],["Nl","NLP & text classification","a"],["Tf","TF-IDF, Bag-of-Words","a"],["Ai","AI APIs & chatbots","a"],["Tt","Text-to-speech","a"],["Gt","Git / GitHub","t"],["Ui","UiPath","t"],["Ex","Excel & web automation","t"]];
-const groups={all:"All",l:"Languages & CS",w:"Web",a:"AI / ML",t:"Tools"};let cur="all";
+const tiles=[["Py","Python","l"],["C","C","l"],["Js","JavaScript","l"],["Ts","TypeScript","l"],["Sq","SQL","l"],["Ja","Java (Object-Oriented Programming)","l"],["R","R Programming","l"],["Db","Database Management Systems (DBMS)","d"],["Mi","Machine Learning","a"],["In","AI Integration","a"],["Ht","HTML","w"],["Cs","CSS","w"],["Re","React","w"],["No","Node.js","w"],["Tw","Tailwind CSS","w"],["Ra","REST APIs","w"],["Ls","Browser localStorage","w"],["Ds","Data structures & algorithms","l"],["Ml","ML pipelines","a"],["Az","Azure ML Studio","a"],["Nl","NLP & text classification","a"],["Tf","TF-IDF, Bag-of-Words","a"],["Ai","AI APIs & chatbots","a"],["Ol","Ollama & local models","a"],["Tt","Text-to-speech","a"],["Gt","Git / GitHub","t"],["Ui","UiPath","t"],["Ex","Excel & web automation","t"],["Cf","Cloudflare Workers","d"],["D1","Cloudflare D1","d"],["Do","Durable Objects","d"],["Sl","SQLite","d"],["Pg","PostgreSQL","d"],["Jn","JSON file storage","d"],["Gp","GitHub Pages","d"],["At","Automated testing","t"],["Bt","Browser testing","t"],["Cv","CSV import","t"]];
+const groups={all:"All",l:"Languages & CS",w:"Web",a:"AI / ML",t:"Tools & testing",d:"Databases & cloud"};let cur="all";
 function drawSkills(){
   $('chips').innerHTML=Object.entries(groups).map(([k,v])=>`<button class="chip" type="button" data-k="${k}" aria-pressed="${k==cur}">${v}</button>`).join('');
   $('tiles').innerHTML=tiles.map(t=>`<div class="tile ${t[2]=='l'||t[2]=='a'?'':'t'} ${cur!='all'&&t[2]!=cur?'d':''}"><b>${t[0]}</b><span>${t[1]}</span></div>`).join('');
@@ -19,6 +19,98 @@ const projects=[["IT Company Platform","Completed · Local Node.js application",
 ["Auto-Pilot AI Video Studio","Prototype",["AI-assisted video workflow with JavaScript, Node.js, AI APIs, text-to-speech and Pexels media.","Covers script generation, voice-over, media sourcing and video assembly."],null,"https://github.com/gampaadvaith2006/AUTO-PILOT-AI-VIDEO-STUDIO"],
 ["IRCTC Automation","UiPath project",["Automated parts of train search using source, destination, date and class inputs.","Explored web and Excel automation."]],
 ["Developer Portfolio","Completed",["Personal developer portfolio with project cards, skills filter, light/dark mode, resume preview and PDF download."],"https://gampaadvaith2006.github.io/advaith-portfolio/","https://github.com/gampaadvaith2006/advaith-portfolio",null,"Open portfolio website"]];
+const projectTechnologies = {
+  "IT Company Platform": [
+    "JavaScript",
+    "Node.js",
+    "HTML",
+    "CSS",
+    "JSON file storage"
+  ],
+  "StockClear": [
+    "JavaScript",
+    "HTML",
+    "CSS",
+    "localStorage",
+    "CSV import",
+    "Automated testing"
+  ],
+  "DevPilot AI": [
+    "Ollama",
+    "PostgreSQL",
+    "Cloudflare Workers",
+    "HTML",
+    "Browser testing"
+  ],
+  "ReUse Exchange": [
+    "Cloudflare Workers",
+    "Cloudflare D1",
+    "SQL",
+    "Integration testing",
+    "Browser testing"
+  ],
+  "StockSmart": [
+    "Cloudflare Workers",
+    "Cloudflare D1",
+    "SQL",
+    "Automated testing",
+    "Browser testing"
+  ],
+  "ScrapConnect": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "Cloudflare Workers",
+    "Cloudflare D1"
+  ],
+  "BotCorp": [
+    "JavaScript",
+    "Node.js",
+    "Ollama"
+  ],
+  "Farm2Shop": [
+    "Cloudflare Workers",
+    "Durable Objects",
+    "SQLite",
+    "Automated testing"
+  ],
+  "SureDeal": [
+    "Backend APIs",
+    "Database integration",
+    "Automated testing"
+  ],
+  "TruthLens AI": [
+    "NLP",
+    "TF-IDF",
+    "Bag-of-Words",
+    "Text classification"
+  ],
+  "Auto-Pilot AI Video Studio": [
+    "JavaScript",
+    "Node.js",
+    "AI APIs",
+    "Text-to-speech",
+    "Pexels"
+  ],
+  "IRCTC Automation": [
+    "UiPath",
+    "Web automation",
+    "Excel"
+  ],
+  "Developer Portfolio": [
+    "JavaScript",
+    "HTML",
+    "CSS",
+    "GitHub Pages"
+  ]
+};
+function projectStack(name){
+  const technologies=projectTechnologies[name]||[];
+  return technologies.length ? `<p class="project-stack" aria-label="Project technologies">${technologies.map(technology=>`<span class="tag">${technology}</span>`).join(' ')}</p>` : '';
+}
+const botcorpProject=$('botcorp-project');
+if(botcorpProject)botcorpProject.querySelector('ul').insertAdjacentHTML('beforebegin',projectStack('BotCorp'));
+
 function projectLinks(p){
   const links=[];
   if(p[3])links.push([p[3],p[6]||'Live showcase']);
@@ -26,7 +118,7 @@ function projectLinks(p){
   if(p[4])links.push([p[4],p[7]||'GitHub source']);
   return links.length?`<p class="project-links">${links.map(([url,label])=>`<a href="${url}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`).join(' · ')}</p>`:'';
 }
-$('projList').innerHTML=projects.filter(p=>p[0]!=='BotCorp').map(p=>`<article class="proj"><div><h3>${p[0]}</h3><span class="tag">${p[1]}</span></div><ul>${p[2].map(x=>`<li>${x}</li>`).join('')}</ul>${projectLinks(p)}</article>`).join('');
+$('projList').innerHTML=projects.filter(p=>p[0]!=='BotCorp').map(p=>`<article class="proj"><div><h3>${p[0]}</h3><span class="tag">${p[1]}</span></div>${projectStack(p[0])}<ul>${p[2].map(x=>`<li>${x}</li>`).join('')}</ul>${projectLinks(p)}</article>`).join('');
 if($('project-count'))$('project-count').textContent='12';
 if($('pending-project-count'))$('pending-project-count').textContent='21';
 const certs=[["Python Programming","GoDing Seekho","April 16, 2025"],["CS50x: Introduction to Computer Science","HarvardX / edX","Verification pending"],["Machine Learning Pipelines with Azure ML Studio","Coursera","June 30, 2025"],["Customer Service with Python: Build a Chatbot using ChatGPT","Coursera","June 30, 2025"],["Data Structure and Algorithms (DSA) Training","Gracious Technologies","Mar 1 – May 10, 2025 · issued June 13, 2025"],["AI Infinity 2026","St. Peter's Engineering College","Certificate of Participation"]];
@@ -34,5 +126,6 @@ $('certList').innerHTML=certs.map(c=>`<div class="cert"><div><b>${c[0]}</b><br><
 
 
 const script=["Hello, I'm Gampa Advaith.","I'm a B.Tech student in Computer Science and Engineering, specializing in Artificial Intelligence and Machine Learning, at St. Peter's Engineering College.","I enjoy learning new technologies and turning them into practical projects, using Python, C, JavaScript, React and Node.js.","I've worked on SureDeal, an AI-assisted shopping and price comparison platform, TruthLens AI for news verification, and Auto-Pilot AI Video Studio.","I've also completed training in Python, CS50x, Azure ML pipelines, and data structures and algorithms.","I'm looking for opportunities in AI, machine learning and software development.","Please explore my projects and certificates. Thank you!"];
+
 
 
