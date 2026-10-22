@@ -27,8 +27,8 @@ function projectLinks(p){
   return links.length?`<p class="project-links">${links.map(([url,label])=>`<a href="${url}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`).join(' · ')}</p>`:'';
 }
 $('projList').innerHTML=projects.filter(p=>p[0]!=='BotCorp').map(p=>`<article class="proj"><div><h3>${p[0]}</h3><span class="tag">${p[1]}</span></div><ul>${p[2].map(x=>`<li>${x}</li>`).join('')}</ul>${projectLinks(p)}</article>`).join('');
-if($('project-count'))$('project-count').textContent='10';
-if($('pending-project-count'))$('pending-project-count').textContent='23';
+if($('project-count'))$('project-count').textContent='11';
+if($('pending-project-count'))$('pending-project-count').textContent='22';
 const certs=[["Python Programming","GoDing Seekho","April 16, 2025"],["CS50x: Introduction to Computer Science","HarvardX / edX","Verification pending"],["Machine Learning Pipelines with Azure ML Studio","Coursera","June 30, 2025"],["Customer Service with Python: Build a Chatbot using ChatGPT","Coursera","June 30, 2025"],["Data Structure and Algorithms (DSA) Training","Gracious Technologies","Mar 1 – May 10, 2025 · issued June 13, 2025"],["AI Infinity 2026","St. Peter's Engineering College","Certificate of Participation"]];
 $('certList').innerHTML=certs.map(c=>`<div class="cert"><div><b>${c[0]}</b><br><small>${c[1]}</small></div><small>${c[2]}</small></div>`).join('');
 
